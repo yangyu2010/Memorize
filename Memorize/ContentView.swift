@@ -14,12 +14,17 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            HStack() {
-                ForEach(emojis[0..<emojisCount], id: \.self) { emoji in
-                    CardView(content: emoji)
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
+                    ForEach(emojis[0..<emojisCount], id: \.self) { emoji in
+                        CardView(content: emoji)
+                            .aspectRatio(2/3, contentMode: .fit)
+                    }
                 }
+                .padding()
             }
             .foregroundColor(.red)
+            Spacer()
             HStack {
                 minus
                 Spacer()
@@ -28,7 +33,7 @@ struct ContentView: View {
             .font(.largeTitle)
             .padding(.horizontal)
         }
-        .padding()
+//        .padding()
     }
     
     var minus: some View {
@@ -61,7 +66,7 @@ struct CardView: View {
             let shape = RoundedRectangle(cornerRadius: 20)
             if isFaceUp {
                 shape.fill().foregroundColor(.white)
-                shape.stroke(lineWidth: 3)
+                shape.strokeBorder(lineWidth: 3)
                 Text(content)
                     .font(.largeTitle)
             } else {
